@@ -1,0 +1,27 @@
+x/[数量][格式][大小] 地址 ------ x/10gx $rsp
+
+x / n f u addr
+n → 显示多少个单位
+f → 输出格式 (format)
+u → 单位大小 (unit size)
+addr → 起始地址
+
+二、常用 format（格式）
+格式	含义
+x	十六进制
+d	有符号十进制
+u	无符号十进制
+o	八进制
+t	二进制
+c	字符
+s	字符串
+i	反汇编指令
+a	地址（带符号名）
+f	浮点数
+
+三、常用 unit size（大小）
+单位	大小	说明
+b	1字节	byte
+h	2字节	halfword
+w	4字节	word
+g	8字节	giant word
