@@ -32,3 +32,8 @@ malloc(size)
   ↓
 9. sysmalloc
      扩展堆（brk/mmap）
+
+# free chunk流程
+malloc:
+- tcache → fastbin → smallbin → unsorted → top chunk
+- 其中tcache中chunk的存放是**单链表**，遵循**LIFO**原则
