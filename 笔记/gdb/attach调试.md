@@ -1,7 +1,11 @@
 此法只能在本地调试时使用
 - gdb.attach(p,'''(在gdb中自动运行的命令)''')  
 - pause()
-
+```py
+def debug(cmd=""): 
+    gdb.attach(p, cmd)
+    pause()
+```
 - 一般用于发送payload前，会打开新的gdb终端界面，
 可先在新的gdb终端中**下断点到接收函数**并在原来终端中**发送payload** （点击任意键），这样就可以在新的gdb终端中调试了
 

