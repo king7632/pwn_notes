@@ -34,3 +34,40 @@ search -t byte 00 #搜索特定的字节值（例如寻找溢出时的 null 字�
 search main #搜索函数 main 的地址。
 #    -t代表--type
 ```
+
+## 堆类
+```py
+heap
+#以数据结构的形式显示所有堆块（chunk）的信息，会列出每个堆块的地址、大小和状态。
+heap chunks
+#列出当前堆上所有已分配和未分配的堆块，信息非常详细。
+heap base
+#查看程序堆（heap）的起始地址。
+bins
+#一次性查看所有种类的 bin（包括 tcache, fastbin, unsortedbin, smallbin, largebin）的链表情况。
+tcache
+#单独查看 tcache（Thread Cache）的详细信息。
+fastbins
+#单独查看 fastbins 的链表情况。
+unsortedbin
+#单独查看 unsortedbin 的链表情况。
+smallbins
+#单独查看 smallbins 的链表情况。
+largebins
+#单独查看 largebins 的链表情况。
+arena
+#显示当前线程分配区（arena）的详细信息。
+vis
+#以图形化的方式展示堆内存的分布情况，非常直观。
+parseheap
+#解析并显示堆的整体结构，也是一个很好用的命令。
+tracemalloc
+#追踪程序中对 malloc 和 free 的所有操作，有助于分析堆的分配和释放过程。
+
+
+
+
+
+
+
+```

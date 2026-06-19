@@ -108,3 +108,9 @@ p.interactive()
 # p.interactive()
 
 #链接：https://www.uf4te.cn/posts/18c02ebd.html#post-comment
+
+# 收获
+# 利用 off-by-one 漏洞修改指向堆的指针，并在修改后的指针指向的堆地址处伪造一个堆块
+# 利用 mmap 分配的内存与 libc 之前存在固定的偏移的特点，推算出 libc 的基地址
+# 由于 unsorted bin 是双向链表，利用第一个 unsorted bin 的 bk 指针指向 libc 中的地址的特点，根据偏移得到 __malloc_hook 真实地址，进而通过 __malloc_hook 的 libc 偏移计算 libc 基地址
+# 通过劫持 __free_hook 为 system() 或 one_gadget 来获得 shell
