@@ -11,3 +11,4 @@ u64(p.recvuntil(b'\x7f)[-6:].ljust(8,b'\x00'))
 - 由于本地调试时二进制文件默认的ld加载器与libc是本地的，与比赛提供的**不同**（可以通过**ldd命令**查看），因此需要使用patchelf来更改libc与ld
 - 更换ld:  patchelf --set-interpreter   /path/to/libc/ld-linux-x86-64.so.2   ./pwn
 - 更换libc:  patchelf --replace-needed  libc.so.6(**系统默认**)  /path/to/libc/libc.so.6   ./pwn
+

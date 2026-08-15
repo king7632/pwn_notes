@@ -6,7 +6,7 @@
   一是修改后一个chunk(chunkA)的size,并free chunkA从而使chunkA与chunkB合并，这个较为
 常用，因为可以绕开unlink对presize-size以及fd-bk双链表的检查
   二是修改后一个chunk的pre in use位，这个多用于off by null,在2.28之前较为简单，只需要
-伪造chunkA的presize位并置空pre in use，然后free chunkA，触发向前合并形成堆块重叠，其中前一个chunkB需要位于双链表中(unsortedbin)从而绕过fd-bk检查
+伪造chunkA的presize位并置空pre in use，然后free chunkA，触发向前合并形成堆块重叠，其中最前面的chunkB需要位于双链表中(unsortedbin)从而绕过fd-bk检查
   关于二方法2.28之后，由于unlink多了presize的检查，因此较为麻烦，因为无法修改正常
 unsortedbin中chunk的size,因此我们需要伪造一个chunk同时绕过两个检查，这个过程涉及对largebin中chunk的fd_nextsize和bk_nextsize的利用，在此不赘述，可见例题balsn_ctf_2019-plaintext
 ```
